@@ -2,23 +2,25 @@ const express = require('express');
 
 const app = express();
 
-// This will only handle get calls to /user
-app.get('/user', (req, res) => {
-  res.send({ firstname: 'Ajit', lastname: 'Singh' })
+const {adminAuth, userAuth} = require('./middlewares/auth')
+
+// Handle auth middleware for all HTTP methods
+app.use('/admin', adminAuth)
+
+app.get('/admin/getUsers', (req, res) => {
+  res.send('All users data sent!')
 })
 
-app.post('/user', (req, res) => {
-  // Saving data to DB
-  res.send("Data saved successfully to the DB!")
+app.get('/admin/deleteUser', (req, res) => {
+  res.send('Deleted a user!')
 })
 
-app.delete('/user', (req, res) => {
-  res.send("Deleted successfully!")
+app.get('/user/login', (req, res) => {
+  res.send('Logging user in!')
 })
 
-// This route will match all HTTP methods API calls to /test
-app.use('/test', (req, res) => {
-  res.send('Test hello from the server!')
+app.get('/user', userAuth, (req, res) => {
+  res.send('Get a user!')
 })
 
 app.listen(8000, () => {
