@@ -1,0 +1,21 @@
+{
+  "name": "devtinder-api",
+  "version": "1.0.0",
+  "description": "Backend service (API's) for devtinder platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "keywords": [
+    "NodeJS",
+    "JavaScript",
+    "ExpressJS",
+    "MongoDB"
+  ],
+  "author": "Ajit Singh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
