@@ -1,13 +1,11 @@
 const mongoose = require('mongoose')
 
-async function connect() {
-  await mongoose.connect('mongodb+srv://infoofajit:lADXpqGnawEvbmvk@nodelab.u8cm8e7.mongodb.net/')
+const DB_USERNAME = 'infoofajit'
+const DB_PASSWORD = 'lADXpqGnawEvbmvk'
+const DB_NAME = 'NodeLab_db'
+
+async function connectDB() {
+  await mongoose.connect(`mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@nodelab.u8cm8e7.mongodb.net/${DB_NAME}`)
 }
 
-connect()
-  .then(() => {
-    console.log('Database connected successfully!');
-  })
-  .catch((err) => {
-    console.log('Something went wrong while connecting to database!', err);
-  })
+module.exports = connectDB
