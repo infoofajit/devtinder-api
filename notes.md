@@ -51,3 +51,4 @@ EP7
 - Difference between JS object and JSON object
 - Add the express.json middleware to your app
 - Make your signup API dynamic to receive data from the end user
+- API - get user by email/name, Feed API to get all users from DB
