@@ -46,3 +46,8 @@ EP6
 - Create a POST signup API to add data to DB
 - Push some documents using API call from postman
 - Error handling using try catch
+
+EP7
+- Difference between JS object and JSON object
+- Add the express.json middleware to your app
+- Make your signup API dynamic to receive data from the end user
