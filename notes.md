@@ -52,3 +52,6 @@ EP7
 - Add the express.json middleware to your app
 - Make your signup API dynamic to receive data from the end user
 - API - get user by email/name, Feed API to get all users from DB
+- Create a delete user API
+- Create a update user API
+- Difference between PATCH vs PUT

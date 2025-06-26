@@ -47,6 +47,28 @@ app.get('/getUserByEmail', async (req, res) => {
   }
 })
 
+app.delete('/user', async (req, res) => {
+  const userId = req.body.id
+
+  try {
+    const user = await User.findByIdAndDelete(userId)
+    res.send("User deleted successfully")
+  } catch (err) {
+    res.status(400).send("Something went wrong!", err)
+  }
+})
+
+app.patch('/user', async (req, res) => {
+  const id = req.body.id
+
+  try {
+    await User.findByIdAndUpdate(id, req.body)
+    res.send("User updated successfully!")
+  } catch (err) {
+
+  }
+})
+
 connectDB()
   .then(() => {
     console.log('Database connected successfully!');
