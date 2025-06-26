@@ -36,3 +36,13 @@ EP5
 - Write a dummy auth middleware for admin
 - Write a dummy auth middleware for all user route except /user/login
 - Error handling using app.use("/", (err, req, res, next) => {})
+
+EP6
+- Create a free custer on Mongo DB official website (Mongo Atlas)
+- Install mongoose library
+- Connect your applicatio to the database "<ConnectionURL>/<DBName>;
+- Call the connectDB function and connect to database before starting application on 7777
+- Create a user schema & user model
+- Create a POST signup API to add data to DB
+- Push some documents using API call from postman
+- Error handling using try catch
