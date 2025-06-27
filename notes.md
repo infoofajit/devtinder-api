@@ -69,3 +69,8 @@ EP8
 - Use schema lever validator function for password, email validation
 
 EP9
+- Validate data in signup API
+- Install bcrypt package
+- Create PasswordHash using bcrypt.hash & save the user is encrypted password
+- Create login API
+- Campare password and throw errors if email or password is invalid
