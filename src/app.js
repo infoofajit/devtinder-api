@@ -12,7 +12,7 @@ app.post('/signup', async (req, res) => {
     await user.save()
     res.send("User created successfully")
   } catch (err) {
-    res.status(400).send(err.message)
+    res.status(400).send("Error saving the user: "+err.message)
   }
 })
 
@@ -51,21 +51,34 @@ app.delete('/user', async (req, res) => {
   const userId = req.body.id
 
   try {
-    const user = await User.findByIdAndDelete(userId)
+    await User.findByIdAndDelete(userId)
     res.send("User deleted successfully")
   } catch (err) {
     res.status(400).send(err.message)
   }
 })
 
-app.patch('/user', async (req, res) => {
-  const id = req.body.id
+app.patch('/user/:id', async (req, res) => {
+  const id = req.params?.id
+  const data = req.body
+
+  const ALLOWED_UPDATE_FIELD = ['firstName', 'lastName', 'age', 'gender', 'avatar', 'skills']
 
   try {
-    await User.findByIdAndUpdate(id, req.body, { runValidators: true, new: true })
-    res.send("User updated successfully!")
+    const isAllowedUpdate = Object.keys(data).every((key) => ALLOWED_UPDATE_FIELD.includes(key))
+
+    if(!isAllowedUpdate) {
+      throw new Error('Following fields can only be updated: firstName, lastName, age, gender, avatar, skills')
+    }
+
+    const user = await User.findByIdAndUpdate(id, req.body, { runValidators: true })
+
+    if(!user) {
+      throw new Error('User not found!')
+    }
+    res.send("User updated successfully!"+user)
   } catch (err) {
-    res.status(400).send(err.message)
+    res.status(400).send("Error while updating the user: "+err.message)
   }
 })
 

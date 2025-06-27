@@ -6,7 +6,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
     minLength: 2,
-    maxLength: 5
+    maxLength: 15
   },
   lastName: {
     type: String
@@ -39,8 +39,17 @@ const userSchema = new Schema({
     type: String,
     default: "This is a default about of the user"
   },
+  avatar: {
+    type: String,
+    default: "https://i.pravatar.cc/150?img=2"
+  },
   skills: {
-    type: [String]
+    type: [String],
+    validate (value) {
+      if(value.length > 5) {
+        throw new Error("Skill should not be more than 5!")
+      }
+    }
   }
 }, {timestamps: true})
 
