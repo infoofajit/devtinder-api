@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+var validator = require('validator')
 const { Schema } = mongoose
 
 const userSchema = new Schema({
@@ -16,7 +17,10 @@ const userSchema = new Schema({
     required: true,
     unique: true,
     lowercase: true,
-    trim: true
+    trim: true,
+    validate (value) {
+      return validator.isEmail(value)
+    }
   },
   password: {
     type: String,
@@ -37,11 +41,16 @@ const userSchema = new Schema({
   },
   about: {
     type: String,
-    default: "This is a default about of the user"
+    default: "This is a default about of the user",
   },
   avatar: {
     type: String,
-    default: "https://i.pravatar.cc/150?img=2"
+    default: "https://i.pravatar.cc/150?img=2",
+    validate (value) {
+      if(!validator.isURL(value)) {
+        throw new Error("Invalid URL")
+      }
+    }
   },
   skills: {
     type: [String],
