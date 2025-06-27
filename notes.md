@@ -55,3 +55,17 @@ EP7
 - Create a delete user API
 - Create a update user API
 - Difference between PATCH vs PUT
+
+EP8
+Explore schema type from the documentation
+Add require, unique, min etc 
+Add default
+Create a custom validator function for gender
+Improve the DB schema
+Add timestamp to the schema
+Add API level validation on Patch and Post API
+Data sanitizing - Add API validation for each field
+Install and explore the validator library
+Use schema lever validator function for password, email validation
+
+

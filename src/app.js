@@ -12,7 +12,7 @@ app.post('/signup', async (req, res) => {
     await user.save()
     res.send("User created successfully")
   } catch (err) {
-    res.status(400).send("Something went wrong!", err)
+    res.status(400).send(err.message)
   }
 })
 
@@ -22,7 +22,7 @@ app.get('/feed', async (req, res) => {
     const users = await User.find()
     res.send(users)
   } catch (err) {
-    res.status(400).send("Something went wrong!", err)
+    res.status(400).send(err.message)
   }
 })
 
@@ -36,14 +36,14 @@ app.get('/getUserByEmail', async (req, res) => {
   //     res.status(400).send("No user found!")
   //   }
   // } catch (err) {
-  //   res.status(400).send("Something went wrong!", err)
+  //   res.status(400).send(err.message)
   // }
 
   try {
     const user = await User.findOne({emailId: req.body.email})
     res.send(user)
   } catch (err) {
-    res.status(400).send("Something went wrong!", err)
+    res.status(400).send(err.message)
   }
 })
 
@@ -54,7 +54,7 @@ app.delete('/user', async (req, res) => {
     const user = await User.findByIdAndDelete(userId)
     res.send("User deleted successfully")
   } catch (err) {
-    res.status(400).send("Something went wrong!", err)
+    res.status(400).send(err.message)
   }
 })
 
@@ -62,10 +62,10 @@ app.patch('/user', async (req, res) => {
   const id = req.body.id
 
   try {
-    await User.findByIdAndUpdate(id, req.body)
+    await User.findByIdAndUpdate(id, req.body, { runValidators: true, new: true })
     res.send("User updated successfully!")
   } catch (err) {
-
+    res.status(400).send(err.message)
   }
 })
 
