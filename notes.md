@@ -86,3 +86,12 @@ EP10
 - Add the authUser middleware in profile API and a new sendConnectionRequest API
 - Set the expiry of JWT token and cookies to 7days
 - Create UserScheme method to comparePassword, getJWT
+
+EP11
+- Explore tinder APIs, and data inside
+- Create a list of all APIs you can think of in DevTinter
+- Group multiple routes under respective routers
+- Read documentation for express.Routers()
+- Create routes folder for managing auth, profile and request router
+- Create authRouter, profileRouter etc.
+- Import these router in app.js
