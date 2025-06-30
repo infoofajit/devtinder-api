@@ -95,3 +95,7 @@ EP11
 - Create routes folder for managing auth, profile and request router
 - Create authRouter, profileRouter etc.
 - Import these router in app.js
+- Create /logout api
+- Create /profile/edit API
+- Create /profile/password API - forgot password API
+- Make you validate all data in every POST, PATCH APIs 
