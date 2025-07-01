@@ -98,4 +98,17 @@ EP11
 - Create /logout api
 - Create /profile/edit API
 - Create /profile/password API - forgot password API
-- Make you validate all data in every POST, PATCH APIs 
+- Make you validate all data in every POST, PATCH APIs
+
+EP12
+- Create conectionRequest schema 
+- Send connection request API
+- Proper vaidation of data with corner cases
+- $or/$and query in
+  https://www.mongodb.com/docs/manual/reference/operator/query-logical/
+- Schema.pre('save') function
+- Read more about indexes in MongoDB
+- Why do we need indexes in DB
+- Advantages/disadvantages of indexes
+  https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/
+- ALWAYS THINK ABOUT CORNER CASES

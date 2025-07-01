@@ -36,10 +36,9 @@ const userSchema = new Schema({
   },
   gender: {
     type: String,
-    validate (value) {
-      if(!['male', 'female', 'others'].includes(value)) {
-        throw new Error('Gender is not valid')
-      }
+    enum: {
+      values: ['male', 'female', 'others'],
+      message: `{VALUE} is incorrect`
     }
   },
   about: {
@@ -64,6 +63,10 @@ const userSchema = new Schema({
     }
   }
 }, {timestamps: true})
+
+// Compound index
+// User.find({firstName: 'Ajit', lastName: 'Singh'})
+userSchema.index({firstName: 1, lastName: 1})
 
 userSchema.methods.getJWT = async function() {
   const user = this
