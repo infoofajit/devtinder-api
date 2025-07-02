@@ -7,7 +7,7 @@ const User = require("../models/user")
 requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res) => {
   try {
     const toUserId = req.params?.toUserId
-    const fromUserId = res.user._id
+    const fromUserId = req.user._id
     const status = req.params?.status
 
     const allowedStatus = ["interested", "ignored"]
@@ -40,6 +40,40 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
     const data = await connectionRequest.save()
     res.json({
       message: "Connection request send successfully",
+      data: data
+    })
+  } catch (err) {
+    res.status(400).json({
+      message: err.message
+    })
+  }
+})
+
+requestRouter.post("/request/review/:status/:requestId", userAuth, async (req, res) => {
+  try {
+    const user = req.user
+    const status = req.params?.status
+    const requestId = req.params?.requestId
+
+    const allowedStatus = ['accepted', 'rejected']
+    if(!allowedStatus.includes(status)) {
+      throw new Error("Invalid status")
+    }
+
+    const connectionRequest = await ConnectionRequestModal.findOne({
+      _id: requestId,
+      toUserId: user._id,
+      status: 'interested'
+    })
+    if(!connectionRequest) {
+      throw new Error("Connection request not found")
+    }
+
+    connectionRequest.status = status
+    const data = await connectionRequest.save()
+
+    res.json({
+      message: "Connection request " + status,
       data: data
     })
   } catch (err) {

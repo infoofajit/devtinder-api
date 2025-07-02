@@ -19,7 +19,7 @@ const userAuth = async (req, res, next) => {
       throw new Error("User does not exist")
     }
 
-    res.user = user
+    req.user = user
     next()
   } catch (err) {
     res.status(400).send("ERROR: " + err)

@@ -112,3 +112,10 @@ EP12
 - Advantages/disadvantages of indexes
   https://www.mongodb.com/docs/manual/core/indexes/index-types/index-compound/
 - ALWAYS THINK ABOUT CORNER CASES
+
+EP13
+- Write code with proper validation for POST /request/review/:status/:requestId
+- Thought process - POST/GET
+- Read about ref and populate https://mongoosejs.com/docs/populate.html
+- Create GET /user/requests/received with all the checks
+- Create GET /user/connection

@@ -1,70 +1,59 @@
 const express = require("express")
+const { userAuth } = require("../middlewares/auth")
+const ConnectionRequestModal = require("../models/connectionRequest")
 const userRouter = express.Router()
-const User = require('../models/user')
 
-// Feed API to get all the users from the DB
-userRouter.get('/feed', async (req, res) => {
+const USER_SAFE_DATA = "firstName lastName"
+
+// Get all the pending connection request for the loggedin user
+userRouter.get("/user/requests/received", userAuth, async (req, res) => {
   try {
-    const users = await User.find()
-    res.send(users)
+    const loggedInUser = req.user
+
+    const connectionRequest = await ConnectionRequestModal.find({
+      toUserId: loggedInUser._id,
+      status: 'interested'
+    }).populate("fromUserId", ['firstName', 'lastName'])
+
+    res.json({
+      message: "Data fetched successfully!",
+      data: connectionRequest
+    })
   } catch (err) {
-    res.status(400).send(err.message)
+    res.send(400).json({
+      message: err.message
+    })
   }
 })
 
-userRouter.get('/getUserByEmail', async (req, res) => {
-  // try {
-  //   const users = await User.find({emailId: req.body.email})
-
-  //   if(users.length) {
-  //     res.send(users)
-  //   } else {
-  //     res.status(400).send("No user found!")
-  //   }
-  // } catch (err) {
-  //   res.status(400).send(err.message)
-  // }
-
+userRouter.get("/user/connection", userAuth, async (req, res) => {
   try {
-    const user = await User.findOne({emailId: req.body.email})
-    res.send(user)
+    const loggedInUser = req.user
+
+    const connection = await ConnectionRequestModal.find({
+      $or: [
+        {toUserId: loggedInUser._id, status: 'accepted'},
+        {fromUserId: loggedInUser._id, status: 'accepted'}
+      ]
+    })
+    .populate("fromUserId", USER_SAFE_DATA)
+    .populate("toUserId", USER_SAFE_DATA)
+
+    const data = connection.map((row) => {
+      if(row.fromUserId._id.toString() === loggedInUser._id.toString()) {
+        return row.toUserId
+      }
+      return row.fromUserId
+    })
+
+    res.json({
+      message: "List",
+      data: data
+    })
   } catch (err) {
-    res.status(400).send(err.message)
-  }
-})
-
-userRouter.delete('/user', async (req, res) => {
-  const userId = req.body.id
-
-  try {
-    await User.findByIdAndDelete(userId)
-    res.send("User deleted successfully")
-  } catch (err) {
-    res.status(400).send(err.message)
-  }
-})
-
-userRouter.patch('/user/:id', async (req, res) => {
-  const id = req.params?.id
-  const data = req.body
-
-  const ALLOWED_UPDATE_FIELD = ['firstName', 'lastName', 'age', 'gender', 'avatar', 'skills']
-
-  try {
-    const isAllowedUpdate = Object.keys(data).every((key) => ALLOWED_UPDATE_FIELD.includes(key))
-
-    if(!isAllowedUpdate) {
-      throw new Error('Following fields can only be updated: firstName, lastName, age, gender, avatar, skills')
-    }
-
-    const user = await User.findByIdAndUpdate(id, req.body, { runValidators: true })
-
-    if(!user) {
-      throw new Error('User not found!')
-    }
-    res.send("User updated successfully!"+user)
-  } catch (err) {
-    res.status(400).send("Error while updating the user: "+err.message)
+    res.status(400).json({
+      message: err.message
+    })
   }
 })
 
