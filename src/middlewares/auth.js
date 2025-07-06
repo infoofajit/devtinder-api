@@ -7,7 +7,7 @@ const userAuth = async (req, res, next) => {
     const {token} = cookies
 
     if(!token) {
-      throw new Error("Invalid token!")
+      res.status(401).send("Unauthorized!")
     }
 
     // Validate my token

@@ -12,6 +12,18 @@ const validateSignUpData = (req) => {
   }
 }
 
+const validateEditProfileData = (req) => {
+  const allowedEditFields = ['firstName', 'lastName', 'age', 'gender', 'avatar', 'about']
+
+  // Write logic to validate data coming from request
+  if(!allowedEditFields) {
+    return false
+  }
+
+  return true
+}
+
 module.exports = {
-  validateSignUpData
+  validateSignUpData,
+  validateEditProfileData
 }
