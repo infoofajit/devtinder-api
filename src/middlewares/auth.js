@@ -8,6 +8,7 @@ const userAuth = async (req, res, next) => {
 
     if(!token) {
       res.status(401).send("Unauthorized!")
+      // throw new Error("Unauthorized!")
     }
 
     // Validate my token

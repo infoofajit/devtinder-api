@@ -23,8 +23,14 @@ authRouter.post('/signup', async (req, res) => {
       skills,
       password: hashPassword
     })
-    await user.save()
-    res.send("User created successfully")
+    const newUser = await user.save()
+    // Create a JWT token
+    const token = await user.getJWT()
+    // Adda token to cookie and send response back to user
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + 1 * 3600000)
+    })
+    res.send(newUser)
   } catch (err) {
     res.status(400).send("Error saving the user: "+err.message)
   }
